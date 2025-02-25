@@ -12,18 +12,29 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json())
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://imagify-client.vercel.app', 'http://localhost:5173']
+    ? ['https://client-gtuku37xg-anonymousarceus-projects.vercel.app', 'http://localhost:5173']
     : 'http://localhost:5173',
   credentials: true
 }))
+
+// Request logging middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
 
 // Connect to MongoDB
 connectDB();
 
 // Routes
-app.use('/user', userRouter);
-app.use('/image', imageRouter);
+app.use('/api/user', userRouter);
+app.use('/api/image', imageRouter);
+
+// Root route
 app.get('/', (req, res) => res.json({ message: "Imagify API is running" }));
+
+// Test route
+app.get('/api/test', (req, res) => res.json({ message: "API endpoints are working" }));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -31,4 +42,16 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// 404 handler
+app.use((req, res) => {
+  console.log(`404: ${req.method} ${req.url} not found`);
+  res.status(404).json({ message: `Cannot ${req.method} ${req.url}` });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log('Available routes:');
+  console.log('- POST /api/user/login');
+  console.log('- POST /api/user/register');
+  console.log('- GET /api/user/credits');
+});
