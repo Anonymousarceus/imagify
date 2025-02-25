@@ -12,9 +12,11 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json())
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://client-gtuku37xg-anonymousarceus-projects.vercel.app', 'http://localhost:5173']
+    ? ['https://client-lime-beta.vercel.app', 'http://localhost:5173']
     : 'http://localhost:5173',
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }))
 
 // Request logging middleware
