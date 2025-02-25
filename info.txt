@@ -1,0 +1,10 @@
+express
+cors--> allows to connect backend server without frontend
+dotenv --> used to make env file in which we can store passwords and important data
+nodemon --> for restarting the server when any changes happens
+form-data 
+jsonwebtoken--> to add authentication in our project
+mongoose --> help to connet backend server with our database
+axios --> help us to make api calls
+bcrypt --> it will encrypt passwords
+razorpay --> helps to integrate payment gateway
